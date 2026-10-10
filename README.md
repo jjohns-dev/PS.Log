@@ -62,6 +62,8 @@ Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for fu
   ./Build/build.ps1 -ResolveDependency -TaskList Analyze  # PSScriptAnalyzer
   ```
 
+  The test suite requires PowerShell 7.4+ (Pester 6 does not support Windows PowerShell), so CI exercises 7.4+ only. Windows PowerShell 5.1 is still expected to work, but is no longer verified.
+
 - The repo includes a dev container for VS Code. Open the workspace in a devcontainer for a fully configured environment.
 
 ## License
