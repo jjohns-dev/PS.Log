@@ -33,7 +33,7 @@ Every workflow calls `jjohns-dev/pwsh-module-ci` at `@v1`.
 
 | Workflow | Calls | Trigger |
 | -------- | ----- | ------- |
-| `ci.yml` | `ci.yml`, `os-matrix: ["ubuntu-latest"]`, `min-tests: 103` | PRs, push to `main` |
+| `ci.yml` | `ci.yml`, `os-matrix: ["ubuntu-latest"]`, `min-tests: 87` | PRs, push to `main` |
 | `pssa-sarif.yml` | `pssa-sarif.yml` | PR to `main`, push to `main` |
 | `release.yml` | `release.yml` | `v<x.y.z>` tag push |
 
@@ -49,6 +49,6 @@ The shared `ci.yml` re-checks the JUnit file in a "Verify Pester results" step a
 
 ## Gotchas that have bitten here
 
-- **`Tests/Common/Help.Tests.ps1` is a template shared across repos** (jjohns-dev/pwsh-module-ci#17). Its mandatory-value assertion cannot fail: removing `Mandatory` from `Stop-Log -Path` still passes. Change the file only under that issue, never as a side effect.
+- **`Tests/Common/Help.Tests.ps1` is a template shared across repos** (jjohns-dev/pwsh-module-ci#17). Its mandatory-value test was deleted on purpose because it compared `Get-Help`'s `Required` to the attribute it is derived from. Do not re-add it from a sibling repo. No other test covers `Mandatory`.
 - **`-ForEach` sources bind at discovery.** Before #54, `$HelpParameterNames` was set only in `BeforeAll`, so 0 "matching help" cases ran. Any new `-ForEach` variable must be set in `BeforeDiscovery`.
 - **The psake `Test` gate checks `$TestResults.Result`, not `FailedCount`** (#52). A test file that throws at discovery reports `Failed: 0` yet fails the build. Do not "simplify" the gate back to `FailedCount`.
