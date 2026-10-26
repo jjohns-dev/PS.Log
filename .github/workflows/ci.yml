@@ -16,7 +16,7 @@ jobs:
     uses: jjohns-dev/pwsh-module-ci/.github/workflows/ci.yml@v1
     with:
       os-matrix: '["ubuntu-latest"]'
-      min-tests: 103 # 90% of 115 collected
+      min-tests: 9999 # TEMPORARY: impossible floor to prove the check fires
     permissions:
       contents: read
       checks: write
