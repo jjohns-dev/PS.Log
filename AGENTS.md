@@ -14,7 +14,7 @@
 
 ## Validating a change
 
-Pins in `Build/depend.psd1`: Pester 6.2.0, psake 5.0.4, PSScriptAnalyzer 1.25.0, BuildHelpers 2.0.16.
+Pins in `Build/depend.psd1`: Pester 6.2.0, psake 5.0.4, PSScriptAnalyzer 1.25.0.
 
 ```pwsh
 ./Build/build.ps1 -ResolveDependency -TaskList Init   # first run on a machine
@@ -23,7 +23,7 @@ Pins in `Build/depend.psd1`: Pester 6.2.0, psake 5.0.4, PSScriptAnalyzer 1.25.0,
 ./Build/build.ps1 -TaskList Cleanup
 ```
 
-- Without BuildHelpers installed, every task fails with a misleading `Could not find the build file psakefile.ps1`. Run with `-ResolveDependency`.
+- `build.ps1` sets `$env:BHProjectPath`, `BHProjectName` and `BHPSModuleManifest` itself; tests read them. The `BH` prefix is a leftover from BuildHelpers, which is no longer a dependency.
 - There is no root `.gitignore`, so `Analyze` and `Test` leave `Staging/` and `Artifacts/` as untracked files. Run `Cleanup` before committing.
 - `Analyze` scans `Staging/` (module sources and manifest) only, never `Tests/` or `Build/`.
 
