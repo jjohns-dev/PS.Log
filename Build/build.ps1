@@ -60,8 +60,11 @@ else {
     Write-Output "Skipping dependency check...`n"
 }
 
-# Init BuildHelpers
-Set-BuildEnvironment -Force
+# Set build environment variables
+$env:BHProjectPath = $PSScriptRoot | Split-Path -Parent
+$manifestFile = Get-ChildItem -Path $env:BHProjectPath -Filter '*.psd1'
+$env:BHProjectName = $manifestFile.BaseName
+$env:BHPSModuleManifest = $manifestFile.FullName
 
 # Execute PSake tasts
 $invokePsakeParams = @{
