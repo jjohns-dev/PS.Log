@@ -23,6 +23,8 @@ function Start-Log {
         Creates a new log file in the folder C:\temp
     .NOTES
         Status: Stable
+    .LINK
+        ftp://example.com
     #>
     [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.String])]
