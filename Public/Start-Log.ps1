@@ -24,7 +24,7 @@ function Start-Log {
     .NOTES
         Status: Stable
     .LINK
-        ftp://example.com
+        https://example.com/a^b
     #>
     [CmdletBinding(SupportsShouldProcess)]
     [OutputType([System.String])]
