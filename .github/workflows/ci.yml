@@ -16,7 +16,7 @@ jobs:
     uses: jjohns-dev/pwsh-module-ci/.github/workflows/ci.yml@v1
     with:
       os-matrix: '["ubuntu-latest"]'
-      min-tests: 999999 # Temporary impossible floor to prove the collection gate
+      min-tests: 87 # 91 collected - min(floor(91 * 0.05), 10) = 91 - 4
     permissions:
       contents: read
       checks: write
