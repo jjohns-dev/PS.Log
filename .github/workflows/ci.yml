@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   validate:
-    uses: jjohns-dev/pwsh-module-ci/.github/workflows/ci.yml@v1
+    uses: jjohns-dev/pwsh-module-ci/.github/workflows/ci.yml@spike/adr-0006-harness-self-checkout
     with:
       os-matrix: '["ubuntu-latest"]'
       min-tests: 87 # 91 collected - min(floor(91 * 0.05), 10) = 91 - 4
