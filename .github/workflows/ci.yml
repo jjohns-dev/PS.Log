@@ -13,10 +13,10 @@ concurrency:
 
 jobs:
   validate:
-    uses: jjohns-dev/pwsh-module-ci/.github/workflows/ci.yml@v1
+    uses: jjohns-dev/pwsh-module-ci/.github/workflows/ci.yml@v2
     with:
       os-matrix: '["ubuntu-latest"]'
-      min-tests: 87 # 91 collected - min(floor(91 * 0.05), 10) = 91 - 4
+      min-tests: 87
     permissions:
       contents: read
       checks: write

@@ -10,11 +10,11 @@
 | `Private/` | Placeholder only; no private functions. |
 | `Tests/Unit/` | One `Verb-Noun.tests.ps1` per public function. |
 | `Tests/Common/` | Help, manifest and meta tests run against every export. |
-| `Build/` | `build.ps1` entry point, psake tasks, `depend.psd1` pins, analyzer settings. |
+| `Build/` | Shim for the shared harness; build tool versions pinned in the harness. See [consumer guide](https://github.com/jjohns-dev/pwsh-module-ci/blob/main/docs/consumer-guide.md). |
 
 ## Validating a change
 
-Pins in `Build/depend.psd1`: Pester 6.2.0, psake 5.0.4, PSScriptAnalyzer 1.25.0.
+Build tool versions are pinned in the shared harness; see the [consumer guide](https://github.com/jjohns-dev/pwsh-module-ci/blob/main/docs/consumer-guide.md).
 
 ```pwsh
 ./Build/build.ps1 -ResolveDependency -TaskList Init   # first run on a machine
@@ -23,13 +23,13 @@ Pins in `Build/depend.psd1`: Pester 6.2.0, psake 5.0.4, PSScriptAnalyzer 1.25.0.
 ./Build/build.ps1 -TaskList Cleanup
 ```
 
-- `build.ps1` sets `$env:BHProjectPath`, `BHProjectName` and `BHPSModuleManifest` itself; tests read them. The `BH` prefix is a leftover from BuildHelpers, which is no longer a dependency.
+- The shim reads the harness version from `ci.yml`, so local runs use the same harness as CI.
 - There is no root `.gitignore`, so `Analyze` and `Test` leave `Staging/` and `Artifacts/` as untracked files. Run `Cleanup` before committing.
 - `Analyze` scans `Staging/` (module sources and manifest) only, never `Tests/` or `Build/`.
 
 ## CI
 
-Every workflow calls `jjohns-dev/pwsh-module-ci` at `@v1`.
+Every workflow calls `jjohns-dev/pwsh-module-ci` at `@v2`.
 
 | Workflow | Calls | Trigger |
 | -------- | ----- | ------- |
@@ -49,6 +49,6 @@ The shared `ci.yml` re-checks the JUnit file in a "Verify Pester results" step a
 
 ## Gotchas that have bitten here
 
-- **`Tests/Common/Help.Tests.ps1` is a template shared across repos** (jjohns-dev/pwsh-module-ci#17). Its mandatory-value test was deleted on purpose because it compared `Get-Help`'s `Required` to the attribute it is derived from. Do not re-add it from a sibling repo. No other test covers `Mandatory`.
+- **`Tests/Common/help.tests.ps1` is a template shared across repos** (jjohns-dev/pwsh-module-ci#17). Its mandatory-value test was deleted on purpose because it compared `Get-Help`'s `Required` to the attribute it is derived from. Do not re-add it from a sibling repo. No other test covers `Mandatory`.
 - **`-ForEach` sources bind at discovery.** Before #54, `$HelpParameterNames` was set only in `BeforeAll`, so 0 "matching help" cases ran. Any new `-ForEach` variable must be set in `BeforeDiscovery`.
-- **The psake `Test` gate checks `$TestResults.Result`, not `FailedCount`** (#52). A test file that throws at discovery reports `Failed: 0` yet fails the build. Do not "simplify" the gate back to `FailedCount`.
+- **The harness's `Test` gate checks `$TestResults.Result`, not `FailedCount`** ([jjohns-dev/pwsh-module-ci#52](https://github.com/jjohns-dev/pwsh-module-ci/issues/52)). A test file that throws at discovery reports `Failed: 0` yet fails the build. This gate now lives in the harness, not this repo.
