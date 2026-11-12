@@ -69,13 +69,7 @@ Follow these steps:
     ./Build/build.ps1 -ResolveDependency -TaskList Analyze # run psscriptanalyzer
     ```
 
-2. Ensure you have generated documentation for your function. The below command will generate a Staging folder in the root of the project with an exact copy of the repo, including generated documentation in markdown. It will then copy that generated documentation into the proper location ready to commit.
-
-    ```pwsh
-    ./Build/build.ps1 -ResolveDependency -TaskList CopyDocumentation # build documentation
-    ```
-
-    - :heavy_exclamation_mark: Do NOT commit the Staging or Artifacts directories as they are only for testing purposes. You can safely delete them when testing is complete with the following command.
+2. Ensure you have run the cleanup task before pushing:
 
     ```pwsh
     ./Build/build.ps1 -ResolveDependency -TaskList Cleanup
