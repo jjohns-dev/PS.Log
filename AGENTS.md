@@ -33,7 +33,7 @@ Every workflow calls `jjohns-dev/pwsh-module-ci` at `@v2`.
 
 | Workflow | Calls | Trigger |
 | -------- | ----- | ------- |
-| `ci.yml` | `ci.yml`, `os-matrix: ["ubuntu-latest"]`, `min-tests: 87` | PRs, push to `main` |
+| `ci.yml` | `ci.yml`, `os-matrix: ["ubuntu-latest"]`, `min-tests: 96` | PRs, push to `main` |
 | `pssa-sarif.yml` | `pssa-sarif.yml` | PR to `main`, push to `main` |
 | `release.yml` | `release.yml` | `v<x.y.z>` tag push |
 
