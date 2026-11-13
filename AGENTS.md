@@ -9,7 +9,7 @@
 | `Public/` | One exported function per file. A new one must also be added to `FunctionsToExport` in `PS.Log.psd1`; the manifest, not `PS.Log.psm1`, controls exports. |
 | `Private/` | Placeholder only; no private functions. |
 | `Tests/Unit/` | One `Verb-Noun.tests.ps1` per public function. |
-| `Tests/Common/` | Help, manifest and meta tests run against every export. |
+| `Tests/Common/` | Help tests run against every export. Manifest, encoding and path-literal checks come from the [shared harness suites](https://github.com/jjohns-dev/pwsh-module-ci/blob/main/docs/consumer-guide.md#shared-tests). |
 | `Build/` | Shim for the shared harness; build tool versions pinned in the harness. See [consumer guide](https://github.com/jjohns-dev/pwsh-module-ci/blob/main/docs/consumer-guide.md). |
 
 ## Validating a change
