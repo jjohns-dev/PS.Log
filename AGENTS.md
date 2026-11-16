@@ -9,7 +9,7 @@
 | `Public/` | One exported function per file. A new one must also be added to `FunctionsToExport` in `PS.Log.psd1`; the manifest, not `PS.Log.psm1`, controls exports. |
 | `Private/` | Placeholder only; no private functions. |
 | `Tests/Unit/` | One `Verb-Noun.tests.ps1` per public function. |
-| `Tests/Common/` | Help tests run against every export. Manifest, encoding and path-literal checks come from the [shared harness suites](https://github.com/jjohns-dev/pwsh-module-ci/blob/main/docs/consumer-guide.md#shared-tests). |
+| Shared tests | Help, manifest, encoding and path-literal checks come from the [shared harness suites](https://github.com/jjohns-dev/pwsh-module-ci/blob/main/docs/consumer-guide.md#shared-tests). |
 | `Build/` | Shim for the shared harness; build tool versions pinned in the harness. See [consumer guide](https://github.com/jjohns-dev/pwsh-module-ci/blob/main/docs/consumer-guide.md). |
 
 ## Validating a change
@@ -33,7 +33,7 @@ Every workflow calls `jjohns-dev/pwsh-module-ci` at `@v2`.
 
 | Workflow | Calls | Trigger |
 | -------- | ----- | ------- |
-| `ci.yml` | `ci.yml`, `os-matrix: ["ubuntu-latest"]`, `min-tests: 96` | PRs, push to `main` |
+| `ci.yml` | `ci.yml`, `os-matrix: ["ubuntu-latest"]`, `min-tests: 69` | PRs, push to `main` |
 | `pssa-sarif.yml` | `pssa-sarif.yml` | PR to `main`, push to `main` |
 | `release.yml` | `release.yml` | `v<x.y.z>` tag push |
 
@@ -49,6 +49,5 @@ The shared `ci.yml` re-checks the JUnit file in a "Verify Pester results" step a
 
 ## Gotchas that have bitten here
 
-- **`Tests/Common/help.tests.ps1` is a template shared across repos** (jjohns-dev/pwsh-module-ci#17). Its mandatory-value test was deleted on purpose because it compared `Get-Help`'s `Required` to the attribute it is derived from. Do not re-add it from a sibling repo. No other test covers `Mandatory`.
 - **`-ForEach` sources bind at discovery.** Before #54, `$HelpParameterNames` was set only in `BeforeAll`, so 0 "matching help" cases ran. Any new `-ForEach` variable must be set in `BeforeDiscovery`.
 - **The harness's `Test` gate checks `$TestResults.Result`, not `FailedCount`** ([jjohns-dev/pwsh-module-ci#52](https://github.com/jjohns-dev/pwsh-module-ci/issues/52)). A test file that throws at discovery reports `Failed: 0` yet fails the build. This gate now lives in the harness, not this repo.
