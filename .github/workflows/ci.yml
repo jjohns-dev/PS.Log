@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   validate:
-    uses: jjohns-dev/pwsh-module-ci/.github/workflows/ci.yml@v2
+    uses: jjohns-dev/pwsh-module-ci/.github/workflows/ci.yml@v2.2.1
     with:
       os-matrix: '["ubuntu-latest"]'
       min-tests: 69 # 72 executed - min(floor(72 * 0.05), 10) = 72 - 3
